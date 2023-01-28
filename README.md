@@ -1,2 +1,2 @@
 # GitDesk
-Zendesk clone for github issues + PRs
+A consolidated zendesk clone for github issues + PRs
