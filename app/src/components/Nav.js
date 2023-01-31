@@ -1,10 +1,11 @@
-import { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { UserContext } from '../utils/context';
 
 const navigation = [
-  { name: 'Dashboard', href: '/', current: true },
-  { name: 'New Issue', href: '/new', current: false },
+  { name: 'Dashboard', href: '/', current: true, user: true },
+  { name: 'New Issue', href: '/new', current: false, user: true },
   { name: 'Login', href: '/login', current: false },
 ];
 
@@ -13,6 +14,9 @@ function classNames(...classes) {
 }
 
 const Nav = () => {
+  const context = useContext(UserContext);
+  const { user } = context;
+  console.log('CONTEXT CHECK', context);
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -46,19 +50,23 @@ const Nav = () => {
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
-                      <a
-                        key={item.name}
-                        href={item.href}
-                        className={classNames(
-                          item.current
-                            ? 'bg-gray-900 text-white'
-                            : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                          'px-3 py-2 rounded-md text-sm font-medium'
-                        )}
-                        aria-current={item.current ? 'page' : undefined}
-                      >
-                        {item.name}
-                      </a>
+                      <Fragment key={item.name}>
+                        {(item.user && user) ||
+                          (!item.user && !user && (
+                            <a
+                              href={item.href}
+                              className={classNames(
+                                item.current
+                                  ? 'bg-gray-900 text-white'
+                                  : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                'px-3 py-2 rounded-md text-sm font-medium'
+                              )}
+                              aria-current={item.current ? 'page' : undefined}
+                            >
+                              {item.name}
+                            </a>
+                          ))}
+                      </Fragment>
                     ))}
                   </div>
                 </div>
