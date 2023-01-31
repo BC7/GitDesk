@@ -16,7 +16,6 @@ function classNames(...classes) {
 const Nav = () => {
   const context = useContext(UserContext);
   const { user } = context;
-  console.log('CONTEXT CHECK', context);
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -97,13 +96,13 @@ const Nav = () => {
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            href="#"
+                            href={`/${user ? 'logout' : 'login'}`}
                             className={classNames(
                               active ? 'bg-gray-100' : '',
                               'block px-4 py-2 text-sm text-gray-700'
                             )}
                           >
-                            Sign out
+                            Log{`${user ? 'out' : 'in'}`}
                           </a>
                         )}
                       </Menu.Item>
