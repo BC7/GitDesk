@@ -6,7 +6,7 @@ const API = {
         return data;
       })
       .catch(() => {
-        return {};
+        return null;
       });
   },
   getIssues: () => {
