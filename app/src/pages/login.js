@@ -24,9 +24,10 @@ const Login = () => {
           });
       } else if (error) {
         navigate('/');
-      } else {
-        window.location.href = process.env.REACT_APP_AUTH_PROVIDER;
       }
+      // else {
+      //   window.location.href = process.env.REACT_APP_AUTH_PROVIDER;
+      // }
     } else {
       navigate.push('/');
     }
