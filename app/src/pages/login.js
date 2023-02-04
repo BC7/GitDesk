@@ -7,6 +7,7 @@ const Login = () => {
   const navigate = useNavigate();
   const context = useContext(UserContext);
   const { user } = context;
+
   useEffect(() => {
     if (!user) {
       const queryString = window.location.search;
@@ -23,17 +24,16 @@ const Login = () => {
             window.location.href = process.env.REACT_APP_AUTH_PROVIDER;
           });
       } else if (error) {
-        navigate('/');
+        window.location.href = '/';
+      } else {
+        window.location.href = process.env.REACT_APP_AUTH_PROVIDER;
       }
-      // else {
-      //   window.location.href = process.env.REACT_APP_AUTH_PROVIDER;
-      // }
     } else {
-      navigate.push('/');
+      navigate('/');
     }
   });
 
-  return <div></div>;
+  return <></>;
 };
 
 export default Login;
