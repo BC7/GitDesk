@@ -20,10 +20,12 @@ const Login = () => {
           .then(({ data }) => {
             navigate('/');
           })
-          .catch(() => {
+          .catch((e) => {
+            console.log('ERROR SENDING CODE: ', e);
             window.location.href = process.env.REACT_APP_AUTH_PROVIDER;
           });
       } else if (error) {
+        console.log(error);
         window.location.href = '/';
       } else {
         window.location.href = process.env.REACT_APP_AUTH_PROVIDER;

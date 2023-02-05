@@ -12,7 +12,8 @@ const API = {
   sendCode: (code) => {
     return fetch('/api/login', {
       method: 'POST',
-      data: JSON.stringify({ code }),
+      headers: { 'Content-type': 'application/json' },
+      body: JSON.stringify({ code }),
     })
       .then((response) => response.json)
       .then((data) => {

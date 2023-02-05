@@ -2,22 +2,23 @@ const { createOAuthAppAuth } = require('@octokit/auth-oauth-app');
 const { request } = require('@octokit/request');
 
 const auth = createOAuthAppAuth({
-  clientId: process.env.clientId,
-  clientSecret: process.env.clientSecret,
+  clientType: 'oauth-app',
+  clientId: process.env.ghClientId,
+  clientSecret: process.env.ghClientSecret,
 });
 
 const tokenAuthentication = async (code) => {
   return await auth({
-    type: 'token',
-    // state: 'mystate123',
-    code, // code from OAuth web flow, see https://git.io/fhd1D
+    type: 'oauth-user',
+    state: process.env.ghState,
+    code,
   });
 };
 
-const findUser = async (atok) => {
+const findUser = async (token) => {
   return await request('GET /user', {
     headers: {
-      authorization: `token ${atok}`,
+      authorization: `token ${token}`,
     },
   })
     .then(({ data }) => {
