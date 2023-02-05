@@ -15,17 +15,14 @@ const Login = () => {
       const code = urlParams.get('code');
       const error = urlParams.get('error');
       if (code) {
-        console.log('GH CODE\n', code);
         API.sendCode(code)
           .then(({ data }) => {
             navigate('/');
           })
           .catch((e) => {
-            console.log('ERROR SENDING CODE: ', e);
             window.location.href = process.env.REACT_APP_AUTH_PROVIDER;
           });
       } else if (error) {
-        console.log(error);
         window.location.href = '/';
       } else {
         window.location.href = process.env.REACT_APP_AUTH_PROVIDER;
