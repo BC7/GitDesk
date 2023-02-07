@@ -1,13 +1,23 @@
+import { useContext } from 'react';
 import { Outlet } from 'react-router-dom';
-import UserContextProvider from '../utils/context';
+import { UserContext } from '../utils/context';
 import Nav from './Nav';
 
 const Layout = () => {
+  const context = useContext(UserContext);
+  const { loading } = context;
+
   return (
-    <UserContextProvider>
+    <>
       <Nav />
-      <Outlet />
-    </UserContextProvider>
+      {loading ? (
+        <div className="loader-container">
+          <div className="spinner"></div>
+        </div>
+      ) : (
+        <Outlet />
+      )}
+    </>
   );
 };
 
