@@ -8,27 +8,24 @@ const Login = () => {
   const context = useContext(UserContext);
   const { user } = context;
 
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const code = urlParams.get('code');
+  const error = urlParams.get('error');
+
   useEffect(() => {
-    if (!user) {
-      const queryString = window.location.search;
-      const urlParams = new URLSearchParams(queryString);
-      const code = urlParams.get('code');
-      const error = urlParams.get('error');
-      if (code) {
-        API.sendCode(code)
-          .then(({ data }) => {
-            navigate('/');
-          })
-          .catch((e) => {
-            window.location.href = process.env.REACT_APP_AUTH_PROVIDER;
-          });
-      } else if (error) {
-        window.location.href = '/';
-      } else {
-        window.location.href = process.env.REACT_APP_AUTH_PROVIDER;
-      }
-    } else {
+    if (!user && code) {
+      API.sendCode(code)
+        .then(() => {
+          navigate('/');
+        })
+        .catch((e) => {
+          navigate('/');
+        });
+    } else if (error || user) {
       navigate('/');
+    } else {
+      window.location.href = process.env.REACT_APP_AUTH_PROVIDER;
     }
   });
 

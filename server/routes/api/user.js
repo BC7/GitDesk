@@ -4,18 +4,20 @@ const app = express();
 
 // Get authenticated user details
 // GET: /api/user
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
   const { user } = req.session;
-  const { ghatoken } = req.session;
+  const { ghtoken } = req.session;
 
   let data = {};
 
   if (user) {
-    findUser(ghtoken)
+    await findUser(ghtoken)
       .then((ghData) => {
         data = ghData;
       })
-      .catch();
+      .catch(() => {
+        req.session = null;
+      });
   }
 
   res.json(data);

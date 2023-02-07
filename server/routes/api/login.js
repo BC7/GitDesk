@@ -3,24 +3,28 @@ const { tokenAuthentication, findUser } = require('../../utils/ghworker');
 const app = express();
 
 // POST: /api/login
-app.post('/', (req, res) => {
+app.post('/', async (req, res) => {
   const { code } = req.body;
   let data = { test: null };
 
   if (code) {
     // exchange code for auth token
-    tokenAuthentication(code)
-      .then((response) => {
+    await tokenAuthentication(code)
+      .then(async (response) => {
         const { token } = response;
-        findUser(token)
+        await findUser(token)
           .then((userData) => {
             const { login } = userData;
             req.session.ghtoken = token;
             req.session.user = login;
           })
-          .catch(() => {});
+          .catch(() => {
+            req.session = null;
+          });
       })
-      .catch(() => {});
+      .catch(() => {
+        req.session = null;
+      });
   }
 
   res.json(data);

@@ -6,11 +6,12 @@ const UserContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [issues, setIssues] = useState(null);
 
-  useEffect(() => {
-    API.getUser()
-      .then(({ user }) => {
-        setUser(user);
-        if (user) {
+  const init = async () => {
+    console.log('GITDESK - INIT');
+    await API.getUser()
+      .then((data) => {
+        if (data) {
+          setUser(data);
           API.getIssues().then(({ issues }) => {
             setIssues(issues);
           });
@@ -18,6 +19,10 @@ const UserContextProvider = ({ children }) => {
         setLoading(false);
       })
       .catch(() => {});
+  };
+
+  useEffect(() => {
+    init();
   }, []);
 
   return (
