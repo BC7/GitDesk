@@ -33,6 +33,9 @@ const API = {
         return {};
       });
   },
+  logout: () => {
+    return fetch('/api/logout');
+  },
 };
 
 export default API;

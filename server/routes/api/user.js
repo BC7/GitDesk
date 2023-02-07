@@ -8,7 +8,7 @@ app.get('/', async (req, res) => {
   const { user } = req.session;
   const { ghtoken } = req.session;
 
-  let data = {};
+  let data = null;
 
   if (user) {
     await findUser(ghtoken)

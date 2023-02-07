@@ -5,6 +5,7 @@ import Details from './pages/details';
 import Create from './pages/create';
 import Login from './pages/login';
 import NotFound from './pages/404';
+import Logout from './pages/logout';
 import './App.css';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
           <Route path="details" element={<Details />} />
           <Route path="new" element={<Create />} />
           <Route path="login" element={<Login />} />
+          <Route path="logout" element={<Logout />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

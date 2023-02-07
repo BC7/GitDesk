@@ -5,7 +5,7 @@ const app = express();
 // POST: /api/login
 app.post('/', async (req, res) => {
   const { code } = req.body;
-  let data = { test: null };
+  let data = null;
 
   if (code) {
     // exchange code for auth token
