@@ -25,7 +25,6 @@ const findUser = async (token) => {
       return data;
     })
     .catch((e) => {
-      console.log(e);
       return null;
     });
 };
